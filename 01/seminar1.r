@@ -3,7 +3,8 @@ library(GA)
 source("mazes.r")
 
 
-m <- maze3
+m <- maze6
+
 m <- str_split(m, "", Inf, simplify = TRUE)
 m
 start <- which(m == "S", arr.ind = TRUE)
@@ -15,6 +16,7 @@ fitnes <- function(v_ukazi) { # nolint
   pos <- start
  
     v_ukazi <- floor(v_ukazi)
+  # print(v_ukazi)
   m1 <- m
   for (i in 1: length(v_ukazi)) {
   
@@ -34,7 +36,8 @@ fitnes <- function(v_ukazi) { # nolint
         pos[1] <- pos[1] + 1
     } 
     else {
-      return(score - nSteps + (sum(abs(start - pos))/ sum(abs(finish - pos))) * 100)
+      return(-score + (sum(abs(start - pos))/ sum(abs(finish - pos))) * 100)
+      # - nSteps 
     }
 
    
@@ -55,7 +58,7 @@ fitnes <- function(v_ukazi) { # nolint
     # print(pos)
   }
   
-  return(score - nSteps + (sum(abs(start - pos))/ sum(abs(finish - pos))) * 100)
+  return(- score + (sum(abs(start - pos))/ sum(abs(finish - pos))) * 10)
   
 }
 
@@ -75,13 +78,13 @@ uBound <- rep(4, nSteps)
 
 }
 
-GA <- ga(type = "real-valued", fitness = fitnes, lower = lBound, upper = uBound, maxiter= 2000, popSize = 1000, pmutation = 0.5, pcrossover = 0.9 )
+GA <- ga(type = "real-valued", fitness = fitnes, lower = lBound, upper = uBound, maxiter= 1000, popSize = 1000, pmutation = 1, pcrossover = 0.9 )
+printPoteze(floor(GA@solution[1, ]))
 
 plot(GA)
 
 print(floor(GA@solution[1, ]))
 
-printPoteze(floor(GA@solution[1, ]))
 
 
 
