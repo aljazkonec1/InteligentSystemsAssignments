@@ -36,7 +36,7 @@ fitnes <- function(v_ukazi) { # nolint
         pos[1] <- pos[1] + 1
     } 
     else {
-      return(-score + (sum(abs(start - pos))/ sum(abs(finish - pos))) * 100)
+      return(score - nSteps + (sum(abs(start - pos))/ sum(abs(finish - pos))) * 100)
       # - nSteps 
     }
 
@@ -58,7 +58,7 @@ fitnes <- function(v_ukazi) { # nolint
     # print(pos)
   }
   
-  return(- score + (sum(abs(start - pos))/ sum(abs(finish - pos))) * 10)
+  return(score - nSteps + (sum(abs(start - pos))/ sum(abs(finish - pos))) * 10)
   
 }
 
@@ -78,7 +78,7 @@ uBound <- rep(4, nSteps)
 
 }
 
-GA <- ga(type = "real-valued", fitness = fitnes, lower = lBound, upper = uBound, maxiter= 1000, popSize = 1000, pmutation = 1, pcrossover = 0.9 )
+GA <- ga(type = "real-valued", fitness = fitnes, lower = lBound, upper = uBound, maxiter= 1000, popSize = 2000, pmutation = 1, pcrossover = 0.9 )
 printPoteze(floor(GA@solution[1, ]))
 
 plot(GA)
@@ -100,12 +100,12 @@ printPoteze <- function(x) {
         m1[pos] <- i
     }
     else if(x[i] == 1 & m1[pos[1], pos[2] + 1] != "#"){  # korak v desno
-        r <- c(r, "D")
+        r <- c(r, "R")
         pos[2] <- pos[2] + 1
         m1[pos] <- i
     }
      else if(x[i] == 2 & m1[pos[1] - 1, pos[2]] != "#"){  # korak gor
-        r <- c(r, "G")
+        r <- c(r, "U")
         pos[1] <- pos[1] - 1
         m1[pos] <- i
     }
