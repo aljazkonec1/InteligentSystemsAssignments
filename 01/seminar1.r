@@ -36,7 +36,7 @@ fitnes <- function(v_ukazi) { # nolint
         pos[1] <- pos[1] + 1
     } 
     else {
-      return(score - nSteps + (sum(abs(start - pos))/ sum(abs(finish - pos))) * 100)
+      return( - (score +1)/nSteps + (sum(abs(start - pos))/ sum(abs(finish - pos))) * 100)
       # - nSteps 
     }
 
@@ -58,7 +58,7 @@ fitnes <- function(v_ukazi) { # nolint
     # print(pos)
   }
   
-  return(score - nSteps + (sum(abs(start - pos))/ sum(abs(finish - pos))) * 10)
+  return(- (score +1)/nSteps + (sum(abs(start - pos))/ sum(abs(finish - pos))) * 10)
   
 }
 
@@ -78,7 +78,7 @@ uBound <- rep(4, nSteps)
 
 }
 
-GA <- ga(type = "real-valued", fitness = fitnes, lower = lBound, upper = uBound, maxiter= 1000, popSize = 2000, pmutation = 1, pcrossover = 0.9 )
+GA <- ga(type = "real-valued", fitness = fitnes, lower = lBound, upper = uBound, maxiter= 10000, popSize = 2000, pmutation = 1, pcrossover = 0.5 )
 printPoteze(floor(GA@solution[1, ]))
 
 plot(GA)
@@ -87,7 +87,7 @@ print(floor(GA@solution[1, ]))
 
 
 
-
+# spremeni da gre print samo do vrednsti BEST || Finish!!!
 
 printPoteze <- function(x) {
   r <- ""
