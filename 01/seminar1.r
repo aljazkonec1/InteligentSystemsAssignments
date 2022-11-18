@@ -3,7 +3,7 @@ library(GA)
 source("01\\mazes.r")
 
 
-m <- maze7_T
+m <- maze3_T
 
 m <- str_split(m, "", Inf, simplify = TRUE)
 m
@@ -16,7 +16,7 @@ fitnes <- function(v_ukazi) { # nolint
   score <- 0
   pos <- start
  
-    v_ukazi <- floor(v_ukazi)
+  v_ukazi <- floor(v_ukazi)
   m1 <- m
   for (i in 1: length(v_ukazi)) {
   
@@ -116,9 +116,11 @@ manhatan <- function(a, b) {
 }
 
 
-
+origMaze <- m
+m 
 t <- which(m== "T", arr.ind = TRUE)
 len <- c()
+t
 for ( i in 1:length(t[,1])){
   len <- c(len,  manhatan(t[i,], start))
 
@@ -126,6 +128,26 @@ for ( i in 1:length(t[,1])){
 t <- cbind(t, len)
 t <- t[order(t[, 3]), ]
 t
+
+t <- rbind(c(start, 0), t)
+t <- rbind(t, c(finish, 0))
+t
+
+m[t] <- "."
+m 
+
+v <- c()
+
+for (i in 2:length(t[,1])){
+  m[t[i-1, ]] <- "S"
+  m[t[i,] ]<- "E"
+  GA <- ga(type = "real-valued", fitness = fitnes, lower = lBound, upper = uBound, maxiter= 1000, popSize = 2000, pmutation = 1, pcrossover = 0.5 )
+  v <- c(v,printPoteze(floor(GA@solution[1, ])) )
+  m[t] <- "."
+
+}
+
+v
 
 
 
