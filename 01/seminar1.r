@@ -36,7 +36,7 @@ fitnes <- function(v_ukazi) { # nolint
         pos[1] <- pos[1] + 1
     } 
     else {
-      return( score - (sum(abs(finish - pos))/(score/length(m[1,]) + 1))  * nSteps + (sum(abs(start - pos))/ sum(abs(finish - pos))) * nSteps )
+      return( score - (sum(abs(finish - pos))/i)  * nSteps + (sum(abs(start - pos))/ sum(abs(finish - pos))) * nSteps )
     }
 
     score <- score + length(m[1,])
