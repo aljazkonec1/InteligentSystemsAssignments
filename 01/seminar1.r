@@ -131,6 +131,7 @@ t
 
 t <- rbind(c(start, 0), t)
 t <- rbind(t, c(finish, 0))
+t <- t[, 1:2]
 t
 
 m[t] <- "."
@@ -141,6 +142,9 @@ v <- c()
 for (i in 2:length(t[,1])){
   m[t[i-1, ]] <- "S"
   m[t[i,] ]<- "E"
+  nSteps <- sum(m == ".") +1
+  lBound <- rep(0, nSteps)
+  uBound <- rep(4, nSteps)
   GA <- ga(type = "real-valued", fitness = fitnes, lower = lBound, upper = uBound, maxiter= 1000, popSize = 2000, pmutation = 1, pcrossover = 0.5 )
   v <- c(v,printPoteze(floor(GA@solution[1, ])) )
   m[t] <- "."
