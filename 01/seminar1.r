@@ -93,7 +93,7 @@ m <- maze5_T
       }
       
     }
-    #Preveri, v katere strani se lahko mutira v tej tocki, da ne gre v steno
+    
     validDirections <- c(0,0,0,0)
     obstajaValid <- FALSE
     
@@ -114,7 +114,6 @@ m <- maze5_T
       obstajaValid <- TRUE
     }
     
-    #Change that element to a random number between the lower and upper bounds
     change <- FALSE
     while(!(change) && obstajaValid){
       new <- runif(1, 0, 4)
@@ -160,43 +159,34 @@ m <- maze5_T
       if(x[i] == 0 & m1[pos[1], pos[2] - 1] != "#" ){ # korak v levo
         r <- c(r, "L")
         pos[2] <- pos[2] - 1
-        # m1[pos] <- i
       }
       else if(x[i] == 1 & m1[pos[1], pos[2] + 1] != "#"){  # korak v desno
         r <- c(r, "R")
         pos[2] <- pos[2] + 1
-        # m1[pos] <- i
       }
       else if(x[i] == 2 & m1[pos[1] - 1, pos[2]] != "#"){  # korak gor
         r <- c(r, "U")
         pos[1] <- pos[1] - 1
-        # m1[pos] <- i
       }
       else if(x[i] == 3 & m1[pos[1] + 1, pos[2]] != "#"){ # korak dol
         r <- c(r, "D")
         pos[1] <- pos[1] + 1
-        # m1[pos] <- i
       } 
       
       if ( m[pos] == "E") {
-        # print(m1)
-        # print(r)
         return(r)
       }
     }
-    # m1[pos] <- "X"
-    # print(m1)
     return(r)
-    
   }
   
   manhatan <- function(a, b) {
     sum(abs(a - b))
   }
   
-  { t <- which(m== "T", arr.ind = TRUE)
+  { t0 <- Sys.time()
+    t <- which(m== "T", arr.ind = TRUE)
     len <- c()
-    #t
     if(!length(t) == 0){
       for (i in 1:length(t[,1])){
         len <- c(len,  manhatan(t[i,], start))
@@ -236,7 +226,13 @@ m <- maze5_T
     m[posE] <- "#"
   }
   
-  print(v)
+  {print(v)
+  
+  time <- round(as.double( difftime(Sys.time(), t0, u = 'secs')))
+  
+  text <- c("This program took ", time, "seconds")
+  print(text)
+  }
   
 }
 
